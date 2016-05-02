@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <title>Experiment with Grids</title>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="A small experiment with grids" />
+    <meta name="keywords" content="grids, layout, masonry" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style type="text/css">
+      body,
+      ol,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      ol {
+        -moz-column-count: 4;
+        -moz-column-gap: 10px;
+        -webkit-column-count: 4;
+        -webkit-column-gap: 10px;
+        column-count: 4;
+        column-gap: 10px;
+        list-style: none;
+        padding: 1em;
+      }
+
+      ol li {
+        display: inline-block;
+        margin: 1em 0;
+        width: 100%;
+      }
+
+      ol li div {
+        border: 1px solid #000;
+        margin: 0 1em;
+        padding: 1em;
+      }
+
+      ol li:nth-child(10n+1) div {
+        height: 7em;
+      }
+
+      ol li:nth-child(10n+2) div {
+        height: 3.5em;
+      }
+
+      ol li:nth-child(10n+3) div {
+        height: 4.6em;
+      }
+
+      ol li:nth-child(10n+4) div {
+        height: 3.5em;
+      }
+
+      ol li:nth-child(10n+5) div {
+        height: 4.2em;
+      }
+
+      ol li:nth-child(10n+6) div {
+        height: 6.8em;
+      }
+
+      ol li:nth-child(10n+7) div {
+        height: 3.5em;
+      }
+
+      ol li:nth-child(10n+8) div {
+        height: 2.2em;
+      }
+
+      ol li:nth-child(10n+9) div {
+        height: 5em;
+      }
+
+      @media only screen and (min-width : 300px) {
+        ol {
+          -moz-column-count: 1;
+          -webkit-column-count: 1;
+          column-count: 1;
+        }
+      }
+
+      @media only screen and (min-width : 550px) {
+        ol {
+
+          -moz-column-count: 2;
+          -webkit-column-count: 2;
+          column-count: 2;
+        }
+      }
+
+      @media only screen and (min-width : 880px) {
+        ol {
+          -moz-column-count: 3;
+          -webkit-column-count: 3;
+          column-count: 3;
+        }
+      }
+
+      @media only screen and (min-width : 1200px) {
+        ol {
+          -moz-column-count: 4;
+          -webkit-column-count: 4;
+          column-count: 4;
+        }
+      }
+
+      @media only screen and (min-width : 1600px) {
+        ol {
+          -moz-column-count: 5;
+          -webkit-column-count: 5;
+          column-count: 5;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <ol class="small">
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+      <li><div>Test</div></li>
+    </ol>
+  </body>
+</html>
