@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <title>Experiment with Grids</title>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="A small experiment with grids" />
+    <meta name="keywords" content="grids, layout, masonry" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style type="text/css">
+      body,
+      ol,
+      li {
+        font-family: Helvetica;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        margin: .5em;
+      }
+
+      ol li {
+        float: left;
+        list-style: none;
+        -moz-transition: left .25s ease-in-out, top .25s ease-in-out;
+        -o-transition: left .25s ease-in-out, top .25s ease-in-out;
+        -webkit-transition: left .25s ease-in-out, top .25s ease-in-out;
+        transition: left .25s ease-in-out, top .25s ease-in-out;
+        width: 33.33%;
+      }
+
+      ol li div {
+        background: #FFF;
+        border: 1px solid #000;
+        height: 20em;
+        margin: 1em;
+        padding: 1em;
+      }
+
+      ol li:nth-child(6n+1) div {
+        height: 18em;
+      }
+
+      ol li:nth-child(6n+2) div {
+        height: 45em;
+      }
+
+      ol li:nth-child(6n+3) div {
+        height: 22em;
+      }
+
+      ol li:nth-child(6n+4) div {
+        height: 23em;
+      }
+
+      ol li:nth-child(6n+5) div {
+        height: 10em;
+      }
+
+      ol li:nth-child(6n+6) div {
+        height: 12em;
+      }
+
+      @media only screen and (min-width : 300px) {
+        ol li {
+          width: 100%
+        }
+      }
+
+      @media only screen and (min-width : 550px) {
+        ol li {
+          width: 50%;
+        }
+      }
+
+      @media only screen and (min-width : 880px) {
+        ol li {
+          width: 33.33%
+        }
+      }
+
+      @media only screen and (min-width : 1200px) {
+        ol li {
+          width: 25%;
+        }
+      }
+
+      @media only screen and (min-width : 1600px) {
+        ol li {
+          width: 20%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SmartGrid layout using JavaScript to place elements</h1>
+    <ol>
+      <li><div>Test 1</div></li>
+      <li><div>Test 2</div></li>
+      <li><div>Test 3</div></li>
+      <li><div>Test 4</div></li>
+      <li><div>Test 5</div></li>
+      <li><div>Test 6</div></li>
+      <li><div>Test 7</div></li>
+      <li><div>Test 8</div></li>
+      <li><div>Test 9</div></li>
+      <li><div>Test 10</div></li>
+      <li><div>Test 11</div></li>
+      <li><div>Test 12</div></li>
+      <li><div>Test 13</div></li>
+    </ol>
+    <script type="text/javascript">
+      (function() {
+        var smartGrid = {
+          container: null,
+          elms: null,
+
+          init: function (elm) {
+            this._findItems(elm);
+            this._reverseStackOrder();
+            this._drawSmartGrid();
+
+            window.addEventListener('resize', this._drawSmartGrid.bind(this), true);
+          },
+
+          /**
+           * Looks for a suitable list of elements to manipulate.
+           *
+           * @method _findItems
+           * @protected
+           */
+          _findItems: function (elm) {
+              elm.style.position = 'relative';
+              this.container = elm;
+              this.elms = elm.getElementsByTagName('li');
+          },
+
+          /**
+           * Draws the smart grid according to available space.
+           *
+           * @method _drawSmartGrid
+           * @protected
+           */
+          _drawSmartGrid: function () {
+            var self            = this,
+                i               = 0,
+                containerWidth  = this.container.offsetWidth,
+                containerHeight = 0,
+                left            = 0,
+                prevLeft        = 0,
+                top             = 0,
+                colHeight       = [];
+
+            Array.prototype.forEach.call(this.elms, function (elm) {
+              var j      = 0,
+                  width  = elm.offsetWidth +
+                           (self._findStyle(elm, 'margin-left') || 0) +
+                           (self._findStyle(elm, 'margin-right') || 0)
+                  height = elm.offsetHeight +
+                           (self._findStyle(elm, 'margin-top') || 0) +
+                           (self._findStyle(elm, 'margin-bottom') || 0)
+
+              // Check to see if we need to wrap.
+              if (prevLeft + width > containerWidth) {
+                i = 0;
+              }
+
+              // If this element is not defined, we assume it's the top element in
+              // the column.
+              if (colHeight[i] === undefined) {
+                colHeight[i] = 0;
+              }
+
+              else {
+                // For all elements that are not part of the first row, we can check
+                // to see if they're being placed in a spot that's especially
+                // offensive.  This is terribly simple, but just checks to see if
+                // any spots offer a clear advantage (half the current elements
+                // height).
+                for (j; j < colHeight.length; j += 1) {
+                  if (colHeight[j] < (colHeight[i] - (height / 2))) {
+                    prevLeft += width;
+
+                    // Check to see if we need to wrap now that we've put this
+                    // element in a new position.
+                    if (prevLeft + width > containerWidth) {
+                      i = 0;
+                    }
+
+                    else {
+                      i += 1;
+                    }
+                  }
+                }
+              }
+
+              // The column height is now our top.
+              top             = colHeight[i];
+              // Our current column height + element height is where the next element
+              // below will be placed.
+              colHeight[i]   += height;
+              // If this is the tallest column, we record it so the parent element
+              // can be styled appropriately.
+              containerHeight = Math.max(containerHeight, top + height);
+
+              // Have room for this element?  Good - let's add on our current
+              // element's width.
+              if (prevLeft + width <= containerWidth) {
+                left      = prevLeft;
+                prevLeft += width;
+              }
+
+              else {
+                // Otherwise, we'll start on a new row.
+                left     = 0;
+                prevLeft = width;
+              }
+
+              i += 1;
+              elm.style.left = left + 'px';
+              elm.style.top = top + 'px';
+              // Just in case this isn't already set.
+              elm.style.position = 'absolute';
+            });
+
+            // After we're done looping, we'll take the total tallied height and set
+            // it to the container.
+            this.container.style.height = containerHeight;
+          },
+
+          /**
+           * Explicitly set each element's z-index within the grid to reverse the
+           * natural stacking order (so previous elements will overlap later ones,
+           * accommodating overflowing elements or flyouts).
+           *
+           * @method _reverseStackOrder
+           * @protected
+           */
+          _reverseStackOrder: function () {
+            var i = this.elms.length;
+
+            Array.prototype.forEach.call(this.elms, function (elm) {
+              elm.style.zIndex = i;
+              i -= 1;
+            });
+          },
+
+         /**
+          * Finds the computed value of a given CSS property.
+          *
+          * @param {Object} elm Element containing a CSS property.
+          * @param {String} property CSS property of the element to be found.
+          * @return {String} Computed CSS property value of the given element and
+          *          property type.
+          */
+          _findStyle : function (elm, property) {
+            var styleValue = '';
+
+            if (elm.currentStyle) {
+              property = property.replace(/-\w/g, function (match) {
+                return match.charAt(1).toUpperCase();
+              });
+
+              styleValue = elm.currentStyle[property];
+            }
+
+            else if (window.getComputedStyle) {
+              styleValue = window.getComputedStyle(elm, null).getPropertyValue(property);
+            }
+
+            else {
+              return 0;
+            }
+
+            if (styleValue) {
+              if ((styleValue.indexOf('px') !== -1) ||
+                  (styleValue.indexOf('em') !== -1) ||
+                  (styleValue.indexOf('%')  !== -1)) {
+                styleValue = this.stripUnits(styleValue);
+              }
+
+              if (property === 'opacity') {
+                styleValue = parseFloat(styleValue, 10);
+              }
+            }
+
+            return styleValue;
+          },
+
+         /**
+          * Sugar function to remove units of measure from a given string.
+          *
+          * @param {String} property Measurement property to have it's units removed.
+          * @return {Integer} Integer value of measurement entered - but without
+          *          units of measure.
+          */
+          stripUnits : function (property) {
+            var value = '';
+
+            if (typeof property === 'string') {
+              value = parseInt(property.replace(new RegExp('(%|px|em)'), ''), 10);
+            }
+
+            else {
+              value = property;
+            }
+
+            return value;
+          }
+        };
+
+        smartGrid.init(document.getElementsByTagName('ol')[0]);
+      }());
+    </script>
+  </body>
+</html>

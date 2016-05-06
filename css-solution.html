@@ -15,8 +15,13 @@
       body,
       ol,
       li {
+        font-family: Helvetica;
         margin: 0;
         padding: 0;
+      }
+
+      h1 {
+        margin: .5em;
       }
 
       ol {
@@ -27,7 +32,7 @@
         column-count: 4;
         column-gap: 10px;
         list-style: none;
-        padding: 1em;
+        padding: .5em;
       }
 
       ol li {
@@ -38,44 +43,32 @@
 
       ol li div {
         border: 1px solid #000;
-        margin: 0 1em;
-        padding: 1em;
+        margin: 0 .5em;
+        padding: .5em;
       }
 
-      ol li:nth-child(10n+1) div {
-        height: 7em;
+      ol li:nth-child(6n+1) div {
+        height: 18em;
       }
 
-      ol li:nth-child(10n+2) div {
-        height: 3.5em;
+      ol li:nth-child(6n+2) div {
+        height: 45em;
       }
 
-      ol li:nth-child(10n+3) div {
-        height: 4.6em;
+      ol li:nth-child(6n+3) div {
+        height: 22em;
       }
 
-      ol li:nth-child(10n+4) div {
-        height: 3.5em;
+      ol li:nth-child(6n+4) div {
+        height: 23em;
       }
 
-      ol li:nth-child(10n+5) div {
-        height: 4.2em;
+      ol li:nth-child(6n+5) div {
+        height: 10em;
       }
 
-      ol li:nth-child(10n+6) div {
-        height: 6.8em;
-      }
-
-      ol li:nth-child(10n+7) div {
-        height: 3.5em;
-      }
-
-      ol li:nth-child(10n+8) div {
-        height: 2.2em;
-      }
-
-      ol li:nth-child(10n+9) div {
-        height: 5em;
+      ol li:nth-child(6n+6) div {
+        height: 12em;
       }
 
       @media only screen and (min-width : 300px) {
@@ -88,7 +81,6 @@
 
       @media only screen and (min-width : 550px) {
         ol {
-
           -moz-column-count: 2;
           -webkit-column-count: 2;
           column-count: 2;
@@ -121,20 +113,21 @@
     </style>
   </head>
   <body>
-    <ol class="small">
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
-      <li><div>Test</div></li>
+    <h1>SmartGrid layout using CSS to place elements</h1>
+    <ol>
+      <li><div>Test 1</div></li>
+      <li><div>Test 2</div></li>
+      <li><div>Test 3</div></li>
+      <li><div>Test 4</div></li>
+      <li><div>Test 5</div></li>
+      <li><div>Test 6</div></li>
+      <li><div>Test 7</div></li>
+      <li><div>Test 8</div></li>
+      <li><div>Test 9</div></li>
+      <li><div>Test 10</div></li>
+      <li><div>Test 11</div></li>
+      <li><div>Test 12</div></li>
+      <li><div>Test 13</div></li>
     </ol>
   </body>
 </html>
